@@ -1,13 +1,13 @@
+require 'simplecov'
+SimpleCov.start do
+  add_group "Tsumamigui", ['lib/tsumamigui']
+end
+
 require 'bundler/setup'
 require 'webmock/rspec'
 require 'pry'
 
 require 'tsumamigui'
-require 'simplecov'
-
-SimpleCov.start do
-  add_group "Tsumamigui", ['lib/tsumamigui']
-end
 
 WebMock.allow_net_connect!(net_http_connect_on_start: true)
 
