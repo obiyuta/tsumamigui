@@ -12,21 +12,24 @@ dependencies:
     - 'vendor/bundle_2.2.7'
     - 'vendor/bundle_2.1.6'
   pre:
-    - 'rvm install 2.3.4'
-    - 'rvm install 2.2.7'
-    - 'rvm install 2.1.6'
+    - rvm install 2.3.4
+    - rvm install 2.2.7
+    - rvm install 2.1.6
   override:
     - bundle install --path vendor/bundle
     - rvm-exec 2.3.4 bash -c 'bundle install --path vendor/bundle_2.3.4'
     - rvm-exec 2.2.7 bash -c 'bundle install --path vendor/bundle_2.2.7'
     - rvm-exec 2.1.6 bash -c 'bundle install --path vendor/bundle_2.1.6'
 test:
+  pre:
+    - echo "alias bec='bundle config --local'" >> ~/.bashrc
+    - source ~/.bashrc
   override:
-    - bundle exec rubocop
+    - bec path vendor/bundle; bundle exec rubocop
     - bundle exec rspec
-    - rvm-exec 2.3.4 bash -c 'bundle exec rspec'
-    - rvm-exec 2.2.7 bash -c 'bundle exec rspec'
-    - rvm-exec 2.1.6 bash -c 'bundle exec rspec'
+    - bec path vendor/bundle_2.3.4; rvm-exec 2.3.4 bash -c 'bundle exec rspec'
+    - bec path vendor/bundle_2.2.7; rvm-exec 2.2.7 bash -c 'bundle exec rspec'
+    - bec path vendor/bundle_2.1.6; rvm-exec 2.1.6 bash -c 'bundle exec rspec'
 general:
   artifacts:
     - coverage
