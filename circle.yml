@@ -2,6 +2,8 @@ machine:
   timezone: Asia/Tokyo
   ruby:
     version: 2.4.1
+  environment:
+    CC_TEST_REPORTER_ID: fb2b65ee179ec4ba3ac0f60d2047823566cc14dac0578c4c401532e682f5d435
 database:
   override:
     - echo 'Skipping DB step.'
@@ -20,20 +22,24 @@ dependencies:
     - rvm-exec 2.3.4 bash -c 'bundle install --path vendor/bundle_2.3.4'
     - rvm-exec 2.2.7 bash -c 'bundle install --path vendor/bundle_2.2.7'
     - rvm-exec 2.1.6 bash -c 'bundle install --path vendor/bundle_2.1.6'
+  post:
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
 test:
   pre:
-    - echo "alias bec='bundle config --local'" >> ~/.bashrc
-    - source ~/.bashrc
+    - cc-test-reporter before-build
   override:
-    - bundle config --local path vendor/bundle
-    - bundle exec rubocop
-    - bundle exec rspec
     - bundle config --local path vendor/bundle_2.3.4
     - rvm-exec 2.3.4 bash -c 'bundle exec rspec'
     - bundle config --local path vendor/bundle_2.2.7
     - rvm-exec 2.2.7 bash -c 'bundle exec rspec'
     - bundle config --local path vendor/bundle_2.1.6
     - rvm-exec 2.1.6 bash -c 'bundle exec rspec'
+    - bundle config --local path vendor/bundle
+    - bundle exec rubocop
+    - bundle exec rspec
+  post:
+    - ./cc-test-reporter after-build --exit-code $EXIT_CODE
 general:
   artifacts:
     - coverage
