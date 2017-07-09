@@ -20,20 +20,22 @@ dependencies:
     - rvm-exec 2.3.4 bash -c 'bundle install --path vendor/bundle_2.3.4'
     - rvm-exec 2.2.7 bash -c 'bundle install --path vendor/bundle_2.2.7'
     - rvm-exec 2.1.6 bash -c 'bundle install --path vendor/bundle_2.1.6'
+  post:
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
 test:
   pre:
-    - echo "alias bec='bundle config --local'" >> ~/.bashrc
-    - source ~/.bashrc
+    - cc-test-reporter before-build
   override:
-    - bundle config --local path vendor/bundle
-    - bundle exec rubocop
-    - bundle exec rspec
     - bundle config --local path vendor/bundle_2.3.4
     - rvm-exec 2.3.4 bash -c 'bundle exec rspec'
     - bundle config --local path vendor/bundle_2.2.7
     - rvm-exec 2.2.7 bash -c 'bundle exec rspec'
     - bundle config --local path vendor/bundle_2.1.6
     - rvm-exec 2.1.6 bash -c 'bundle exec rspec'
+    - bundle config --local path vendor/bundle
+    - bundle exec rubocop; cc-test-reporter after-build --exit-code $?
+    - bundle exec rspec
 general:
   artifacts:
     - coverage
