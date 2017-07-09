@@ -25,11 +25,15 @@ test:
     - echo "alias bec='bundle config --local'" >> ~/.bashrc
     - source ~/.bashrc
   override:
-    - bec path vendor/bundle; bundle exec rubocop
+    - bundle config --local path vendor/bundle
+    - bundle exec rubocop
     - bundle exec rspec
-    - bec path vendor/bundle_2.3.4; rvm-exec 2.3.4 bash -c 'bundle exec rspec'
-    - bec path vendor/bundle_2.2.7; rvm-exec 2.2.7 bash -c 'bundle exec rspec'
-    - bec path vendor/bundle_2.1.6; rvm-exec 2.1.6 bash -c 'bundle exec rspec'
+    - bundle config --local path vendor/bundle_2.3.4
+    - rvm-exec 2.3.4 bash -c 'bundle exec rspec'
+    - bundle config --local path vendor/bundle_2.2.7
+    - rvm-exec 2.2.7 bash -c 'bundle exec rspec'
+    - bundle config --local path vendor/bundle_2.1.6
+    - rvm-exec 2.1.6 bash -c 'bundle exec rspec'
 general:
   artifacts:
     - coverage
