@@ -27,7 +27,7 @@ dependencies:
     - chmod +x ./cc-test-reporter
 test:
   pre:
-    - cc-test-reporter before-build
+    - ./cc-test-reporter before-build
   override:
     - bundle config --local path vendor/bundle_2.3.4
     - rvm-exec 2.3.4 bash -c 'bundle exec rspec'
