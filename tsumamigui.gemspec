@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['obiyuta']
   spec.email         = ['obi.yuta@gmail.com']
 
-  spec.summary       = 'Write a short summary, because Rubygems requires one.'
-  spec.description   = 'Write a longer description or delete this line.'
+  spec.summary       = 'The simple and hussle-free Ruby web scraper'
+  spec.description   = 'Tsumamigui（つまみぐい） is a simple and hussle-free Ruby web scraping library.'
   spec.homepage      = 'https://github.com/obiyuta/tsumamigui'
   spec.license       = 'MIT'
 
