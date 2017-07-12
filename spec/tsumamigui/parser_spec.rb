@@ -53,6 +53,14 @@ RSpec.describe Tsumamigui::Parser do
     let(:element) { result[0] }
 
     it_behaves_like 'parsed result'
+
+    context 'when invalid value is given' do
+      it 'raise ParseError' do
+        expect do
+          klass.new(xpath).send(:parse, nil)
+        end.to raise_error Tsumamigui::ParserError
+      end
+    end
   end
 
   describe '#extract' do
@@ -62,6 +70,14 @@ RSpec.describe Tsumamigui::Parser do
       expected = {h1: 'Example Domain'}
       extracted = klass.new(xpath).send(:extract, nokogiri_doc)
       expect(extracted).to eq expected
+    end
+
+    context 'when invalid value is given' do
+      it 'raise ParseError' do
+        expect do
+          klass.new(xpath).send(:extract, nil)
+        end.to raise_error Tsumamigui::ParserError
+      end
     end
   end
 end

@@ -22,7 +22,7 @@ module Tsumamigui
     private
 
     # @return [Array<Tsumamigui::Response>] responses
-    # @raise [Tsumamigui::ParseError]
+    # @raise [Tsumamigui::ParserError]
     def parse(responses)
       results = []
       responses.each do |res|
@@ -33,11 +33,12 @@ module Tsumamigui
       end
       results
     rescue => e
-      raise ParseError, e.message
+      raise ParserError, e.message
     end
 
     # @param [Object] document Nokogiri::HTML::Document
     # @return [Hash]
+    # @raise [Tsumamigui::ParserError]
     def extract(doc)
       result = {}
       @xpath.each do |k, v|
@@ -45,7 +46,7 @@ module Tsumamigui
       end
       result
     rescue => e
-      raise ParseError, e.message
+      raise ParserError, e.message
     end
   end
 end
