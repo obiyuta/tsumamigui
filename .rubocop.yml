@@ -2,6 +2,7 @@ AllCops:
     DisplayCopNames: true
     Exclude:
         - 'vendor/**/*'
+        - '*.gemspec'
 Style/Documentation:
     Enabled: false
 Style/AsciiComments:
