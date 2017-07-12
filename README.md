@@ -1,5 +1,5 @@
 # Tsumamigui
-[![Gem Version](https://badge.fury.io/rb/tsumamigui.svg)](https://badge.fury.io/rb/tsumamigui) ![circleci](https://circleci.com/gh/obiyuta/tsumamigui.svg?&style=shield&circle-token=8e2bda0f04504c2fe43d3fe70ea8ab1b6184806f) [![Code Climate](https://codeclimate.com/github/obiyuta/tsumamigui/badges/gpa.svg)](https://codeclimate.com/github/obiyuta/tsumamigui) [![Test Coverage](https://codeclimate.com/github/obiyuta/tsumamigui/badges/coverage.svg)](https://codeclimate.com/github/obiyuta/tsumamigui/coverage) [![Dependency Status](https://gemnasium.com/badges/github.com/obiyuta/tsumamigui.svg)](https://gemnasium.com/github.com/obiyuta/tsumamigui) [![Inline docs](http://inch-ci.org/github/obiyuta/tsumamigui.svg?branch=master)](http://inch-ci.org/github/obiyuta/tsumamigui)
+[![Gem Version](https://badge.fury.io/rb/tsumamigui.svg)](https://badge.fury.io/rb/tsumamigui) [![circleci](https://circleci.com/gh/obiyuta/tsumamigui.svg?&style=shield&circle-token=8e2bda0f04504c2fe43d3fe70ea8ab1b6184806f)](https://circleci.com/gh/obiyuta/tsumamigui/tree/master) [![Code Climate](https://codeclimate.com/github/obiyuta/tsumamigui/badges/gpa.svg)](https://codeclimate.com/github/obiyuta/tsumamigui) [![Test Coverage](https://codeclimate.com/github/obiyuta/tsumamigui/badges/coverage.svg)](https://codeclimate.com/github/obiyuta/tsumamigui/coverage) [![Dependency Status](https://gemnasium.com/badges/github.com/obiyuta/tsumamigui.svg)](https://gemnasium.com/github.com/obiyuta/tsumamigui) [![Inline docs](http://inch-ci.org/github/obiyuta/tsumamigui.svg?branch=master)](http://inch-ci.org/github/obiyuta/tsumamigui)
 
 Tsumamigui（つまみぐい） is a simple and hussle-free Ruby web scraping library.
 
@@ -52,7 +52,6 @@ ___Important:___ Tsumamigui requests each urls at intervals of 1.0~3.0sec automa
 ## TODO
 
 - [ ] Custom request headers.
-- [ ] SSL support. (unchecked)
 
 etc...
 
