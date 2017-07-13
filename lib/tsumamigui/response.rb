@@ -1,7 +1,10 @@
 module Tsumamigui
   class Response
+    # request url
     attr_reader :url
+    # fetched html
     attr_reader :html
+    # charset of fetched html
     attr_reader :charset
 
     # @param [String] url
@@ -13,7 +16,8 @@ module Tsumamigui
       @charset = charset
     end
 
-    # @return [Array]
+    # Convert request data to array
+    # @return [Array] [url, html, charset]
     def to_array
       [@url, @html, @charset]
     end

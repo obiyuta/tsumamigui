@@ -7,7 +7,7 @@ module Tsumamigui
     class << self
       # @param [String] urls
       # @param [Array<String>] urls
-      # @return [Array<Tsumamigui::Response>]
+      # @return [Array<Tsumamigui::Response>] response instances
       def run(*urls)
         new(urls).send(:run)
       end
@@ -27,7 +27,8 @@ module Tsumamigui
 
     private
 
-    # @return [Array<Tsumamigui::Response>]
+    # Execute request and return responses
+    # @return [Array<Tsumamigui::Response>] response instances
     def run
       results = []
       @urls.each do |url|
@@ -36,6 +37,7 @@ module Tsumamigui
       results
     end
 
+    # Fetch HTML from url and convert to response object
     # @param [String] url
     # @return [Tsumamigui::Response] response
     # @raise [Tsumamigui::RequestError]
