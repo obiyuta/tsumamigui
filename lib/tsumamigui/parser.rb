@@ -3,12 +3,13 @@ require 'tsumamigui/error'
 
 module Tsumamigui
   class Parser
+    # xpath to getting the data from
     attr_reader :xpath
 
     class << self
       # @param [Array<Tsumamigui::Response>] responses
       # @param [Hash] xpath
-      # @return [Array<Hash>]
+      # @return [Array<Hash>] parsed responses
       def parse(responses, xpath)
         new(xpath).send(:parse, responses)
       end
@@ -21,7 +22,9 @@ module Tsumamigui
 
     private
 
-    # @return [Array<Tsumamigui::Response>] responses
+    # Parse response data into hash object
+    # @param [Array<Tsumamigui::Response>] responses
+    # @return [Array<Hash>] parsed responses
     # @raise [Tsumamigui::ParserError]
     def parse(responses)
       results = []
@@ -36,13 +39,14 @@ module Tsumamigui
       raise ParserError, e.message
     end
 
+    # Extract data from parsed html with xpath
     # @param [Object] document Nokogiri::HTML::Document
-    # @return [Hash]
+    # @return [Hash] xpath and its key
     # @raise [Tsumamigui::ParserError]
-    def extract(doc)
+    def extract(document)
       result = {}
       @xpath.each do |k, v|
-        result[k] = doc.xpath(v).to_s
+        result[k] = document.xpath(v).to_s
       end
       result
     rescue => e
