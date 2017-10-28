@@ -1,0 +1,98 @@
+defaults: &defaults
+  working_directory: ~/tsumamigui
+  environment:
+    CC_TEST_REPORTER_ID: fb2b65ee179ec4ba3ac0f60d2047823566cc14dac0578c4c401532e682f5d435
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    docker:
+      - image: circleci/ruby:2.4.2-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-latest
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          paths:
+            - vendor/bundle
+            - Gemfile.lock
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-latest
+
+  lint:
+    docker:
+      - image: circleci/ruby:2.4.2-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-latest
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rubocop
+    
+  rspec:
+    <<: *defaults
+    docker:
+      - image: circleci/ruby:2.4.2-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-latest
+
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rspec
+      - run: ./cc-test-reporter after-build -t simplecov --exit-code $?
+      - store_artifacts:
+          path: coverage
+
+  rspec-2_3_5:
+    <<: *defaults
+    docker:
+      - image: circleci/ruby:2.3.5-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-2_3_5
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rspec
+      - save_cache:
+          paths:
+            - vendor/bundle
+            - Gemfile.lock
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-2_3_5
+
+  rspec-2_2_8:
+    <<: *defaults
+    docker:
+      - image: circleci/ruby:2.2.8-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-2_2_8
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rspec
+      - save_cache:
+          paths:
+            - vendor/bundle
+            - Gemfile.lock
+          key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-2_2_8
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - lint:
+          requires:
+            - build
+      - rspec:
+          requires:
+            - build
+      - rspec-2_3_5:
+          requires:
+            - build
+      - rspec-2_2_8:
+          requires:
+            - build
