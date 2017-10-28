@@ -1,7 +1,24 @@
+
 defaults: &defaults
   working_directory: ~/tsumamigui
   environment:
     CC_TEST_REPORTER_ID: fb2b65ee179ec4ba3ac0f60d2047823566cc14dac0578c4c401532e682f5d435
+
+jobs: &jobs
+  jobs:
+    - build
+    - lint:
+        requires:
+          - build
+    - rspec:
+        requires:
+          - build
+    - rspec-2_3_5:
+        requires:
+          - build
+    - rspec-2_2_8:
+        requires:
+          - build
 
 version: 2
 jobs:
@@ -82,17 +99,15 @@ jobs:
 workflows:
   version: 2
   build_and_test:
-    jobs:
-      - build
-      - lint:
-          requires:
-            - build
-      - rspec:
-          requires:
-            - build
-      - rspec-2_3_5:
-          requires:
-            - build
-      - rspec-2_2_8:
-          requires:
-            - build
+    <<: *jobs
+
+  scheduled-build_and_test:
+    triggers:
+      - schedule:
+          cron: "0 23 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    <<: *jobs
+      
