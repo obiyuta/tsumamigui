@@ -13,8 +13,8 @@ jobs: &jobs
     - rspec:
         requires:
           - build
-    - rspec-2_3_5:
-    - rspec-2_2_8:
+    - rspec-2_3_5
+    - rspec-2_2_8
 
 version: 2
 jobs:
