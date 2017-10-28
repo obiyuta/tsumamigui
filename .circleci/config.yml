@@ -17,6 +17,7 @@ jobs:
       - save_cache:
           paths:
             - vendor/bundle
+            - Gemfile.lock
           key: gems-{{ checksum "Gemfile" }}
 
   lint:
