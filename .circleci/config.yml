@@ -98,7 +98,8 @@ jobs: &jobs
 workflows:
   version: 2
   build_and_test:
-    <<: *jobs
+    jobs:
+      <<: *jobs
 
   scheduled-build_and_test:
     triggers:
@@ -107,5 +108,6 @@ workflows:
           filters:
             branches:
               only: master
-    <<: *jobs
+    jobs:
+      <<: *jobs
       
