@@ -9,7 +9,7 @@ module Tsumamigui
       # @param [Array<String>] urls
       # @return [Array<Tsumamigui::Response>] response instances
       def run(*urls)
-        new(urls).send(:run)
+        new(urls).exec_request
       end
     end
 
@@ -22,20 +22,15 @@ module Tsumamigui
     def initialize(*urls)
       @urls = urls.flatten
       raise ArgumentError, 'No argument is specified' if @urls.empty?
-      @urls
     end
-
-    private
 
     # Execute request and return responses
     # @return [Array<Tsumamigui::Response>] response instances
-    def run
-      results = []
-      @urls.each do |url|
-        results.push(fetch(url))
-      end
-      results
+    def exec_request
+      @urls.map { |url| fetch(url) }
     end
+
+    private
 
     # Fetch HTML from url and convert to response object
     # @param [String] url
