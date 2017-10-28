@@ -1,10 +1,25 @@
 defaults: &defaults
   working_directory: ~/tsumamigui
+  environment:
+    CC_TEST_REPORTER_ID: fb2b65ee179ec4ba3ac0f60d2047823566cc14dac0578c4c401532e682f5d435
 
 version: 2
 jobs:
-  lint:
+  build:
     <<: *defaults
+    docker:
+      - image: circleci/ruby:2.4.2-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gems-{{ checksum "Gemfile" }}
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          paths:
+            - vendor/bundle
+          key: gems-{{ checksum "Gemfile" }}
+
+  lint:
     docker:
       - image: circleci/ruby:2.4.2-node-browsers
     steps:
@@ -13,12 +28,8 @@ jobs:
           key: gems-{{ checksum "Gemfile" }}
       - run: bundle install --path vendor/bundle
       - run: bundle exec rubocop
-      - save_cache:
-          paths:
-            - vendor/bundle
-          key: gems-{{ checksum "Gemfile" }}
     
-  rspec-2_4_2:
+  rspec:
     <<: *defaults
     docker:
       - image: circleci/ruby:2.4.2-node-browsers
@@ -26,13 +37,15 @@ jobs:
       - checkout
       - restore_cache:
           key: gems-{{ checksum "Gemfile" }}
+
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
       - run: bundle install --path vendor/bundle
       - run: bundle exec rspec
-      - save_cache:
-          paths:
-            - vendor/bundle
-          key: gems-{{ checksum "Gemfile" }}
-
+      - run: ./cc-test-reporter after-build -t simplecov --exit-code $EXIT_CODE
+      - store_artifacts:
+          path: coverage
+          destination: artifact-file
 
   rspec-2_3_5:
     <<: *defaults
@@ -66,15 +79,18 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  build_and_test:
     jobs:
-      - lint
-      - rspec-2_4_2:
+      - build
+      - lint:
+          requires:
+            - build
+      - rspec:
           requires:
             - lint
       - rspec-2_3_5:
           requires:
-            - lint
+            - rspec
       - rspec-2_2_8:
           requires:
-            - lint
+            - rspec
