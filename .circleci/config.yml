@@ -104,7 +104,7 @@ workflows:
   scheduled-build_and_test:
     triggers:
       - schedule:
-          cron: "*/5 * * * *"
+          cron: "* * * * *"
           filters:
             branches:
               only:
