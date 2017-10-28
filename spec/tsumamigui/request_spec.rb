@@ -82,8 +82,8 @@ RSpec.describe Tsumamigui::Request do
     end
   end
 
-  describe '#run' do
-    let(:result) { instance.send(:run) }
+  describe '#exec_request' do
+    let(:result) { instance.exec_request }
     let(:response) { result[0] }
 
     it 'returns array' do
