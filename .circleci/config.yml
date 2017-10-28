@@ -45,7 +45,6 @@ jobs:
       - run: ./cc-test-reporter after-build -t simplecov --exit-code $EXIT_CODE
       - store_artifacts:
           path: coverage
-          destination: artifact-file
 
   rspec-2_3_5:
     <<: *defaults
