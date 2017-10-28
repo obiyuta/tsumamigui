@@ -109,6 +109,5 @@ workflows:
             branches:
               only:
                 - master
-                - feature/schedules-build
     <<: *jobs
       
