@@ -72,9 +72,9 @@ workflows:
       - rspec-2_4_2:
           requires:
             - lint
-      - rspec-2_3_5
+      - rspec-2_3_5:
           requires:
             - lint
-      - rspec-2_2_8
+      - rspec-2_2_8:
           requires:
             - lint
