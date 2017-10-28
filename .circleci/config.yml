@@ -42,7 +42,7 @@ jobs:
       - run: chmod +x ./cc-test-reporter
       - run: bundle install --path vendor/bundle
       - run: bundle exec rspec
-      - run: ./cc-test-reporter after-build -t simplecov --exit-code $EXIT_CODE
+      - run: ./cc-test-reporter after-build -t simplecov --exit-code $?
       - store_artifacts:
           path: coverage
 
