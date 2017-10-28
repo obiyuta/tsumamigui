@@ -81,25 +81,25 @@ jobs:
 
 
 jobs: &jobs
-  - build
-  - lint:
-      requires:
-        - build
-  - rspec:
-      requires:
-        - build
-  - rspec-2_3_5:
-      requires:
-        - build
-  - rspec-2_2_8:
-      requires:
-        - build
+  jobs:
+    - build
+    - lint:
+        requires:
+          - build
+    - rspec:
+        requires:
+          - build
+    - rspec-2_3_5:
+        requires:
+          - build
+    - rspec-2_2_8:
+        requires:
+          - build
 
 workflows:
   version: 2
   build_and_test:
-    jobs:
-      <<: *jobs
+    <<: *jobs
 
   scheduled-build_and_test:
     triggers:
@@ -108,6 +108,5 @@ workflows:
           filters:
             branches:
               only: master
-    jobs:
-      <<: *jobs
+    <<: *jobs
       
