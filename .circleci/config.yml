@@ -79,20 +79,33 @@ jobs:
             - Gemfile.lock
           key: gems-{{ checksum "Gemfile" }}-{{ .Revision }}-2_2_8
 
+
+jobs: &jobs
+  - build
+  - lint:
+      requires:
+        - build
+  - rspec:
+      requires:
+        - build
+  - rspec-2_3_5:
+      requires:
+        - build
+  - rspec-2_2_8:
+      requires:
+        - build
+
 workflows:
   version: 2
   build_and_test:
-    jobs:
-      - build
-      - lint:
-          requires:
-            - build
-      - rspec:
-          requires:
-            - build
-      - rspec-2_3_5:
-          requires:
-            - build
-      - rspec-2_2_8:
-          requires:
-            - build
+    <<: *jobs
+
+  scheduled-build_and_test:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only: master
+    <<: *jobs
+      
