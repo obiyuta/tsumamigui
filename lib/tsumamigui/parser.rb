@@ -27,14 +27,12 @@ module Tsumamigui
     # @return [Array<Hash>] parsed responses
     # @raise [Tsumamigui::ParserError]
     def parse(responses)
-      results = []
-      responses.each do |res|
+      responses.map do |res|
         url, html, charset = res.to_array
         result = extract(Nokogiri::HTML.parse(html, nil, charset))
         result[:scraped_from] = url
-        results.push(result)
+        result
       end
-      results
     rescue => e
       raise ParserError, e.message
     end
@@ -44,11 +42,9 @@ module Tsumamigui
     # @return [Hash] xpath and its key
     # @raise [Tsumamigui::ParserError]
     def extract(document)
-      result = {}
-      @xpath.each do |k, v|
-        result[k] = document.xpath(v).to_s
+      @xpath.each_with_object({}) do |(key, value), hash|
+        hash[key] = document.xpath(value).to_s
       end
-      result
     rescue => e
       raise ParserError, e.message
     end
