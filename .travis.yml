@@ -1,10 +1,10 @@
 language: ruby
-
-rvm: 
- - 2.1
-
+rvm:
+- 2.1
 install:
 - bundle install --path vendor/bundle
-
 script:
-  - bundle exec rspec
+- bundle exec rspec
+notifications:
+  slack:
+    secure: Xa8QbpXmep2+cIbcjwBMXVQ+omxbfKdoeFgQnaMMUBB0c2wiBU8DlpcbbZCuk+OteyLsUhFxV6wy/8j5+aQjj7NmcbHcsLt/TN+z9ibyTi1RYE6C3e6QbvvFHNitbp8ji42SEEP0UJrRURlSpCAMkbdJpwwHHErWJFPf+lvSW8wzsg0H6TG/P2lCVZUzTeZ6p7hqswzez3DWK6CYOgiU8zF/Gg3p+pdOwg5XlQIt+15SH6U8Hpx1nkKteiNvHFIDwCxBnYkF4NtVo31zGFfBNVYk8bGE0Dsv4+tdbXjgscMPN4R5WyXCzyyidyges6Hoo3u3ArqLYNdJ8PUYgNaue3shiyok3fTh3XugK0zOz03clApI6AfGdoisBCe/Xp77z2WLbb2dNB+IdElQImH6RhnXYUPlGcJLlB3I4P+Kbc36z0BoSy1NheggTEiHHUO8fGtLQ4RQQ4GhbXFBnNAY9NoU8hE18RltTD786oZYisSiYU8fCZdG4QP4LjKxVkAh5R0AXSCRbkGlWOJ1dyQ/actXfBb2v6U1uAfTXQC/UvKnsdTR2yPPX8T3bZDSACVsm0r5gRAHY3caE7QuL8wMZNDDNoF19rbcp0YlJkGzBbsZ2toLl1qEsWtHKuOd9UiqQoXT9wyfH+DHPIzaB644yTWFRgvetZsfTGMDFM78qBk=
