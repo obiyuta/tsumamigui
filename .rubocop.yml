@@ -13,6 +13,8 @@ Style/NumericLiterals:
     Enabled: false
 Style/FrozenStringLiteralComment:
     Enabled: false
+Style/RescueStandardError:
+    Enabled: false
 Metrics/BlockLength:
     Exclude:
         - 'spec/**/*'
@@ -20,5 +22,3 @@ Layout/SpaceAroundEqualsInParameterDefault:
     EnforcedStyle: no_space
 Layout/SpaceInsideHashLiteralBraces:
     EnforcedStyle: no_space
-Lint/RescueWithoutErrorClass:
-    Enabled: false
