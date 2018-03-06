@@ -58,8 +58,8 @@ module Tsumamigui
 
     # @return [Hash] options
     def request_options
-      homepage = 'https://github.com/obiyuta/tsumamigui'
-      {'User-Agent' => "Tsumamigui/#{Tsumamigui::VERSION} (+#{homepage})"}
+      site = 'https://github.com/obiyuta/tsumamigui'
+      {'User-Agent' => "Tsumamigui/#{Tsumamigui::VERSION} (+#{site})"}
     end
   end
 end
