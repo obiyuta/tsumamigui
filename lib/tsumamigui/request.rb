@@ -36,6 +36,7 @@ module Tsumamigui
     # @param [String] url
     # @return [Tsumamigui::Response] response
     # @raise [Tsumamigui::RequestError]
+    # rubocop:disable Security/Open
     def fetch(url)
       charset = nil
       sleep(sleep_interval)
@@ -48,6 +49,7 @@ module Tsumamigui
     rescue => e
       raise RequestError, e.message
     end
+    # rubocop:enable Security/Open
 
     # @return [Float] sec 1.0-3.0秒
     def sleep_interval
