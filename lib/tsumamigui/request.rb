@@ -13,7 +13,7 @@ module Tsumamigui
       end
     end
 
-    INTERVAL = 1.0..3.0 # sec
+    INTERVAL = (1.0..3.0).freeze # sec
 
     attr_reader :urls
 
